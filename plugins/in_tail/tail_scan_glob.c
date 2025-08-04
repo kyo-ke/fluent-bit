@@ -205,7 +205,7 @@ static int tail_scan_path(const char *path, struct flb_tail_config *ctx)
 
     /* Scan the given path with error checking enabled. */
     ret = do_glob(path, GLOB_TILDE | GLOB_ERR, NULL, &globbuf);
-    if (ret == GLOB_ABORTED && ctx->skip_permission_errors) {
+    if (ret == GLOB_ABORTED && !ctx->skip_permission_errors) {
         flb_plg_warn(ctx->ins, "read error, check permissions: %s", path);
         globfree(&globbuf);
         ret = do_glob(path, GLOB_TILDE, NULL, &globbuf);
